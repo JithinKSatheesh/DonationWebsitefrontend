@@ -98,12 +98,21 @@ const RoundedNavLinks = ({link,text,history,symbol})=>{
 
 const Menu = ({ history }) => {
 
+    const MenuStyle = {
+        Navbar:{
+            position:'fixed',
+            width:'100%',
+            top:'0',
+            zIndex:'1000'
+        }
+    }
+
     return (
-        <div className="bg-white">
+        <div style={MenuStyle.Navbar} className="bg-white">
             <div className="container">
                 <div className="d-flex">
                     <div className="h3 p-3">
-                        <Link   to="/" > <span className="text-now">LOGO</span> </Link>
+                        <Link   to="/" > <span className="text-now font-weight-bold">LOGO</span> </Link>
                     </div>
                     <div className="ml-auto d-flex">
                         <div className="m-2">

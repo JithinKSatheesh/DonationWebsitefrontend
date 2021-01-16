@@ -1,4 +1,5 @@
 import Menu from './Menu'
+import Footer from "./Footer";
 
 const Layout = ({
     className,
@@ -10,6 +11,7 @@ const Layout = ({
         <div className={className}>
             {children}
         </div>
+        <Footer/>
     </div>
 )
 

@@ -1,56 +1,50 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Layout from './Layout'
-import HeroBg from '../Assets/heroBg.jpg'
+import Hero from './Hero'
+import QuoteCard from './QuoteCard'
+import Donate from './Donate'
+import Impact from "./Impact";
+import FloatButton from './FloatButton'
 
-export default function Home(props) {
+
+
+export default function Home() {
+
+    const[startScroll,setStartScroll] = useState(false)
+    
+
+    const handleScroll = ()=>{        
+        if(window.pageYOffset > 50){
+            console.log('ividee')
+            setStartScroll(true)
+        }else{
+            setStartScroll(false)
+        }
+        // console.log(window.pageYOffset,startScroll)
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll)
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+        }
+    })
     
 
     return (
-        <Layout >
-            {Hero()}
-            
+        <Layout className='container'>
+            <div className="space-100"></div>
+            <Hero />
+            <QuoteCard/>
+            <div className="space-50"></div>
+            <Donate/>
+            <div className="space-100"></div>
+            <div className="space-100"></div>
+            <div className="space-100"></div>
+            <Impact/>
+            <FloatButton small={startScroll}/>
         </Layout>
     )
 }
 
-const Hero = ()=>{
-
-    const StyleHero = {
-        OuterBody:{
-            backgroundImage:`URL(${HeroBg})`,
-            width:'100%',
-            height:'80vh',
-            backgroundSize:'cover'
-        },
-        HugeFont:{
-            fontSize:'10em',
-            color:'#f7b744',
-            margin:'5px',
-            fontWeight:'bold'
-        }
-       
-    }
-
-    const HeroText_donate = ['D','O','N','A','T','E']
-
-    return(
-        <div style={StyleHero.OuterBody} className="container">
-            <div className="d-flex justify-content-around">
-                <RenderHugeText text={HeroText_donate} textStyle={StyleHero.HugeFont}/>
-            </div>
-        </div>
-    )
-}
-
-
-const RenderHugeText = ({text,textStyle})=>{
-    return(
-        text&&text.map((letter,index)=>{
-            return(
-                <div key={index} style={textStyle}>
-                    {letter}
-                </div>
-            )
-        })
-    )
-}
