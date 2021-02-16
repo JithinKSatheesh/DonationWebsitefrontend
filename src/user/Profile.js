@@ -216,10 +216,10 @@ const DonateItemForm = () => {
                 <label className="custom-file-label" htmlFor="inputGroupFile01">Upload image</label>
             </div>
             <div className="space-20"></div>
-            <div class="custom-control custom-switch">
+            <div className="custom-control custom-switch">
                 <input type="checkbox" checked={needHelp} onChange={switchChange}
                         className="custom-control-input" id="customSwitch1"/>
-                <label class="custom-control-label" htmlFor="customSwitch1">
+                <label className="custom-control-label" htmlFor="customSwitch1">
                     Need transport facility?
                     <div className="text-info small">
                         {

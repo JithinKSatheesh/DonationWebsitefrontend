@@ -27,9 +27,14 @@ export const signIn = user =>{
         body: JSON.stringify(user)
     }).then(res => {
         console.log(res)
-        return res.json()
+        if(res){
+            return res.json()
+        }
     }).catch(err => {
-        console.log(err)
+        console.log(err,"error")
+        return {
+            error:'Failed to fetch data'
+        }
     })
 }
 

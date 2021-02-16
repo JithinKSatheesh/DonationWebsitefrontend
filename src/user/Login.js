@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { RoundButton,DonateCard,BigHeading } from '../core/Utils';
 import {signIn,authenticate,isAuthenticated} from '../Auth/Auth'
 import Layout from '../core/Layout'
@@ -16,6 +16,11 @@ export default function Login(props) {
         redirectToReffer:false,
     })
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+   
+
     const handleChange = name => event =>{
         setValues({...values,error:false,[name]:event.target.value})
     }
@@ -23,7 +28,7 @@ export default function Login(props) {
     const { email, password, error,loading} = values
     // const {user} = isAuthenticated()
 
-   
+    
 
     const clickSubmit = (event)=>{
         event.preventDefault()
