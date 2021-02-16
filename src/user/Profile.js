@@ -46,7 +46,8 @@ export default function Profile() {
             <div className="space-100"></div>
             <div className="row">
                 <div className="col-12">
-                    <BigHeading text={`Hi, ${user.name}`} size={'2em'} color='#012f84'/>
+                    {/* <BigHeading text={`Hi, ${user.name}`} size={'2em'} color='#012f84'/> */}
+                    <BigHeading text={`Hi, User`} size={'2em'} color='#012f84'/>
                     <div className="space-5 bg-now"></div>
                     <div className="space-50"></div>
                     <BigHeading text={'Donate money'} size={'1.5em'} color='#012f84' />

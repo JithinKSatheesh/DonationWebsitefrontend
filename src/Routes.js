@@ -14,7 +14,8 @@ const Routes = ()=>{
         <BrowserRouter>
             <Switch>
                 <Route path='/'  exact component={Home} />
-                <PrivateRoute path='/profile' exact  component={Profile} />
+                {/* <PrivateRoute path='/profile' exact  component={Profile} /> */}
+                <Route path='/profile' exact  component={Profile} />
                 <Route path='/login' exact  component={Login} />
                 <Route path='/volunteer' exact  component={Volunteer} />
 
