@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Layout from '../core/Layout'
-import { RoundButton,DonateCard,BigHeading } from '../core/Utils';
+import { RoundButton,DonateCard,BigHeading,PreviewImage } from '../core/Utils';
+import {isAuthenticated} from '../Auth/Auth'
 
+import Fade from 'react-reveal/Fade'
 
 
 export default function Profile() {
@@ -10,18 +12,42 @@ export default function Profile() {
         'You donate ₹1000 on 20/2/2021',
         'You donate ₹2000 on 20/3/2021',
         'You donate ₹100 on 20/4/2021',
-        'You donate ₹800 on 20/6/2021',
     ]
+
+    const PromisedItemsList = [
+        {
+        id:1,
+        name:'Books',
+        status:'Awaiting to get delivered',
+        needTransportHelp : true,
+        transportVolunteer:{
+            name:'Amal',
+            phone:'8980989878'
+            },   
+        },
+        {
+        id:2,
+        name:'Cloths',
+        status:'Under review',
+        needTransportHelp : true,
+        transportVolunteer:{
+            
+            },   
+        },
+    ]
+
+    const {user} = isAuthenticated()
 
     
 
     return (
         <Layout className='container'>
+            <Fade>
             <div className="space-100"></div>
             <div className="row">
                 <div className="col-12">
-                    <BigHeading text={'Hi, User'} size={'2em'}/>
-                    <div className="space-5 bg-light"></div>
+                    <BigHeading text={`Hi, ${user.name}`} size={'2em'} color='#012f84'/>
+                    <div className="space-5 bg-now"></div>
                     <div className="space-50"></div>
                     <BigHeading text={'Donate money'} size={'1.5em'} color='#012f84' />
                     <div className="space-20"></div>
@@ -40,10 +66,10 @@ export default function Profile() {
                     <div className="space-20"></div>
                 </div>
                 <div className="col-12 col-md-4">
-                    <DonateItemCard/>
+                    <DonateItemForm/>
                 </div>
                 <div className="col-12 col-md-7 offset-md-1">
-                    <PromisedItems/>
+                    <PromisedItems promisedItemsList={PromisedItemsList}/>
                     <div className="space-20"></div>
                     <div style={{cursor:'pointer'}} className="text-now font-weight-bold p-2">
                         view donated item history
@@ -54,6 +80,7 @@ export default function Profile() {
                 </div>
             </div>
             <div className="space-50"></div>
+            </Fade>
         </Layout>
     )
 }
@@ -81,6 +108,13 @@ const PaymentCard = () => {
 
 const PaymentHistoryCard = ({paymentList}) => {
 
+    const Style = {
+        outerBody:{
+            boxShadow:'0px 0px 10px 5px rgba(84, 84, 84, 0.1)',
+            borderRadius:'10px'
+        }
+    }
+
     return (
         <>
             <div style={{cursor:'pointer'}} className="text-now font-weight-bold p-2">
@@ -92,7 +126,7 @@ const PaymentHistoryCard = ({paymentList}) => {
             <div className="p-2">
                 {paymentList&&paymentList.map((list,index)=>{
                     return(
-                        <div key={index} className="card p-2 m-1">
+                        <div key={index} style={Style.outerBody} className=" p-2 m-1">
                                 {list}
                             </div>)
                     })}
@@ -102,17 +136,42 @@ const PaymentHistoryCard = ({paymentList}) => {
 }
 
 
-const DonateItemCard = () => {
+const DonateItemForm = () => {
     const FormStyle = {
         InputBox:{
             borderRadius:'20px'
         }
     }
+
+    const [values,setValues] = useState({
+        name:'',
+        description:'',
+        phone:'',
+        location:'',
+    })
+
+    const [fileURL,setFileURL] = useState(null)
+    const [needHelp,setNeedHelp] = useState(false)
+
+    const handleChange = name => event =>{
+        setValues({...values,[name]:event.target.value})
+    }
+
+    const filePick = (event) =>{
+        setFileURL(URL.createObjectURL(event.target.files[0]))
+    } 
+
+    const switchChange = event=>{
+        setNeedHelp(event.target.checked)
+    }
+
     return (
         <DonateCard>
             <div className="form-group">
                 <label className='text-now font-weight-bold'>Name</label>
                 <input
+                    onChange={handleChange('name')}
+                    value={values.name}
                     placeholder='e.g. Cloth, books, ...'
                     style={FormStyle.InputBox}
                     type="text"
@@ -121,6 +180,8 @@ const DonateItemCard = () => {
             <div className="form-group">
                 <label className='text-now font-weight-bold'>Description</label>
                 <input
+                    onChange={handleChange('description')}
+                    value={values.description}
                     placeholder='e.g. 5 set of medium size shirts'
                     style={FormStyle.InputBox}
                     type="text"
@@ -129,6 +190,8 @@ const DonateItemCard = () => {
             <div className="form-group">
                 <label className='text-now font-weight-bold'>Phone</label>
                 <input
+                    onChange={handleChange('phone')}
+                    value={values.phone}
                     placeholder='e.g. 9087879878'
                     style={FormStyle.InputBox}
                     type="text"
@@ -137,38 +200,88 @@ const DonateItemCard = () => {
             <div className="form-group">
                 <label className='text-now font-weight-bold'>Location</label>
                 <input
+                    onChange={handleChange('location')}
+                    value={values.location}
                     placeholder='e.g. kochi'
                     style={FormStyle.InputBox}
                     type="text"
                     className="form-control" />
             </div>
+            <div className="p-1">
+                <PreviewImage maxWidth='150px' maxHeight='150px' image={fileURL}/>
+            </div>
+            <div className="space-5"></div>
+            <div className="custom-file">
+                <input onChange={filePick} type="file" className="custom-file-input" id="inputGroupFile01"/>
+                <label className="custom-file-label" htmlFor="inputGroupFile01">Upload image</label>
+            </div>
+            <div className="space-20"></div>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" checked={needHelp} onChange={switchChange}
+                        className="custom-control-input" id="customSwitch1"/>
+                <label class="custom-control-label" htmlFor="customSwitch1">
+                    Need transport facility?
+                    <div className="text-info small">
+                        {
+                            needHelp?
+                            'Yes, I need help to pick up my donation'
+                            :
+                            'I will deliver it myself'
+                        }
+                    </div>
+                </label>
+            </div>
+            <div className="space-5"></div>
+            
+            <div className="space-20"></div>
             <RoundButton text={'Donate Item'} Bgcolor='#012f84' Hovercolor='#ec4392'/>
         </DonateCard>
     )
 }
 
 
-const PromisedItems = ()=>{
-    return(
-        <>
+const PromisedItems = ({promisedItemsList})=>{
+
+    return(<>
         <div className="text-now font-weight-bold p-2">
-                        Promised item status
+            Promised item status
+        </div>
+        {
+        promisedItemsList && promisedItemsList.map((data)=>(
+            <React.Fragment key={data.id} >
+                
+                <DonateCard>
+                    <div className="text-now">
+                        Name : {data.name}
                     </div>
-                    <DonateCard>
-                        <div className="text-now">
-                            Name : Books
-                        </div>
-                        <div className="text-now">
-                            status: Awaiting to get delivered 
-                        </div>
-                        <div className="space-20"></div>
-                        <div className="alert alert-info">
-                            We'll let you know when someone volunteer to deliver your item.
-                        </div>
-                        <div className="btn btn-danger">
-                            Cancel donation
-                        </div>
-                    </DonateCard>
-        </>
+                    <div className="text-now">
+                        status: {data.status}
+                    </div>
+                    <div className="space-20"></div>
+                    {
+                        data.needTransportHelp && (
+                        <>
+                            {
+                                data.transportVolunteer.name=== undefined?
+                                <div className="alert alert-light">
+                                    We'll let you know when someone volunteer to pickup your item.
+                                </div>
+                                :
+                                <div className="alert alert-success">
+                                    {data.transportVolunteer.name} ({data.transportVolunteer.phone}) 
+                                    is willing to help arrage transport facility for your donation.
+                                </div>
+                            }
+                       </>)
+                    }
+                    <div className="btn btn-danger">
+                        Cancel donation
+                    </div>
+                </DonateCard>
+            </React.Fragment>
+        ))
+        
+        }</>
+        
     )
 }

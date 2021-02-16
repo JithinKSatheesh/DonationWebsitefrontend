@@ -5,6 +5,10 @@ import QuoteCard from './QuoteCard'
 import Donate from './Donate'
 import Impact from "./Impact";
 
+import Fade from 'react-reveal/Fade'
+
+
+
 
 
 
@@ -13,8 +17,12 @@ export default function Home() {
     return (
         <Layout className='container'>
             <div className="space-100"></div>
-            <Hero />
-            <QuoteCard/>
+            <Fade >
+                <Hero />
+            </Fade>
+            <Fade bottom>
+                <QuoteCard/>
+            </Fade>
             <div className="space-50"></div>
             <Donate/>
             <div className="space-100"></div>

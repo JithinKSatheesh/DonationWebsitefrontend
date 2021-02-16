@@ -25,8 +25,8 @@ const Hero = ()=>{
 
     const HeroText_donate = ['D','O','N','A','T','E']
 
-    const calc = o => `translateY(${o * 0.05}px)`
-    const calc2 = o => `translateY(-${o * 0.05}px)`
+    const calc = o => `translateY(${o * 0.1}px)`
+    const calc2 = o => `translateY(${o * 0.2}px)`
 
 
     const ref = useRef()
@@ -51,7 +51,7 @@ const Hero = ()=>{
             <animated.div 
                 style={{ transform: offset.interpolate(calc) }} 
                 className="d-flex justify-content-around">
-                <RenderHugeText text={HeroText_donate} textStyle={StyleHero.HugeFont}/>
+                    <RenderHugeText text={HeroText_donate} textStyle={StyleHero.HugeFont}/> 
             </animated.div>
             <div className="space-20"></div>
             <animated.div 

@@ -19,7 +19,7 @@ export default function Quotecard() {
         }
     }
 
-    const QuoteText = 'When you donate to us, you’re helping to propel Sainte-Justine to the highest levels of pediatric medicine. '
+    const QuoteText = 'When you donate to us, you’re helping lot of  minds achieve their dreams. '
     
     return (
         <div style={QuoteStyle.OuterContainer}>

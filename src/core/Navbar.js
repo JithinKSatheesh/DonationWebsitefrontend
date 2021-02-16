@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import {signOut,isAuthenticated} from '../Auth/Auth'
 
 
 const Heart = ()=>{
@@ -115,15 +116,25 @@ const Menu = ({ history }) => {
                         <Link   to="/" > <span className="text-now font-weight-bold">LOGO</span> </Link>
                     </div>
                     <div className="ml-auto d-flex">
-                        <div className="m-2">
+                        {/* <div className="m-2">
                             <NavLinks link='/event' text='Events' history={history}/>
-                        </div>
+                        </div> */}
                         <div className="m-2">
-                            <RoundedNavLinks link='/donations' symbol={<Heart/>} text={'Donations'} history={history}/>
+                            <RoundedNavLinks link='/profile' symbol={<Heart/>} text={'Donations'} history={history}/>
                         </div>
                         <div className="m-2">
                             <NavLinks link='/about' text='About' history={history}/>
                         </div>
+                        {isAuthenticated() && 
+                            <div className='m-2' onClick={()=>(signOut(()=>(console.log('clicked'))))} >
+                                <NavLinks link='/' text='Logout' history={history}/>
+                            </div>
+                        }
+                        {/* {!isAuthenticated() && 
+                            <div className='m-2' >
+                                <NavLinks link='/login' text='Login' history={history}/>
+                            </div>
+                        } */}
                         <div className="m-2">
                             <HarmBurger/>
                         </div>

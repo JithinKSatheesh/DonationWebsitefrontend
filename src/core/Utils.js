@@ -10,7 +10,8 @@ export const RoundButton =({text,Bgcolor,Hovercolor,radius})=>{
             color:'white',
             borderRadius:radius?radius:'30px',
             textAlign:'center',
-            cursor:'pointer'
+            cursor:'pointer',
+            textDecoration:'none'
         },
         ExpandedBody:{
             // width:'200px',
@@ -35,8 +36,9 @@ export const DonateCard = ({children})=>{
     const CardStyle = {
         OuterBody:{
             boxShadow:'0px 0px 10px 5px rgba(84, 84, 84, 0.1)',
-            padding:'50px 20px',
-            borderRadius:'20px'
+            padding:'20px 20px',
+            borderRadius:'20px',
+            margin:'20px'
         },
         InputStyle:{
             borderRadius:'20px'
@@ -65,5 +67,20 @@ export const BigHeading = ({text,color,size})=>{
                 {text}
             </span>
         </div>
+    )
+}
+
+export const PreviewImage = ({image,maxWidth,maxHeight})=>{
+    const Style = {
+        imageContainer:{
+            width:'100%',
+            maxWidth:maxWidth?maxWidth:'100px',
+            maxHeight:maxHeight?maxHeight:'',
+            margin:'5px',
+            borderRadius:'10px'
+        }
+    }
+    return(
+        <img  style={Style.imageContainer} src={image} alt=""/>
     )
 }

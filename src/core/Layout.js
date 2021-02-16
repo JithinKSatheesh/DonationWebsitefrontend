@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import Menu from './Menu'
+import Menu from './Navbar'
 import Footer from "./Footer"
 import FloatButton from './FloatButton'
 
@@ -10,12 +10,10 @@ const Layout = ({className,children}) =>{
 
     const handleScroll = ()=>{        
         if(window.pageYOffset > 50){
-            console.log('ividee')
             setStartScroll(true)
         }else{
             setStartScroll(false)
         }
-        // console.log(window.pageYOffset,startScroll)
     }
 
     useEffect(() => {
