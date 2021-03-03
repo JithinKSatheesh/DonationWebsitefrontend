@@ -61,21 +61,25 @@ const RoundedNavLinks = ({link,text,history,symbol})=>{
 
     const[hovered,setHovered] = useState(false)
 
-    // const isActive = (history, path) => {
-    //     return (history.location.pathname === path) ? { backgroundColor: '#012f84' } : { backgroundColor: '' }
-    // }
+    const isActive = (history, path) => {
+        return (history.location.pathname === path) ?  NavStyle.OuterBodyActive  : {}
+    }
 
     const NavStyle = {
         OuterBody : {
             borderRadius:'30px',
             cursor:'pointer',
             color:'#012f84',
-            backgroundColor:'#ebeff3',
+            // backgroundColor:'#ebeff3',
         },
         OuterBodyHovered : {
+            backgroundColor:'#ebeff3',
+            color:'#012f84',
+        },
+        OuterBodyActive : {
             color:'white',
             backgroundColor:'#012f84',
-        }
+        },
     }
 
     return(
@@ -83,7 +87,8 @@ const RoundedNavLinks = ({link,text,history,symbol})=>{
         <div style={
                 Object.assign(
                     NavStyle.OuterBody,
-                    (hovered&&NavStyle.OuterBodyHovered)
+                    (hovered&&NavStyle.OuterBodyHovered),
+                    (isActive(history,link)),
                     )}
                 onMouseOver={()=>setHovered(true)}
                 onMouseOut={()=>setHovered(false)}
@@ -116,14 +121,15 @@ const Menu = ({ history }) => {
                         <Link   to="/" > <span className="text-now font-weight-bold">LOGO</span> </Link>
                     </div>
                     <div className="ml-auto d-flex">
-                        {/* <div className="m-2">
-                            <NavLinks link='/event' text='Events' history={history}/>
-                        </div> */}
+               
                         <div className="m-2">
-                            <RoundedNavLinks link='/profile' symbol={<Heart/>} text={'Donations'} history={history}/>
+                            <RoundedNavLinks link='/profile-donate' symbol={<Heart/>} text={'Donate'} history={history}/>
                         </div>
                         <div className="m-2">
-                            <NavLinks link='/about' text='About' history={history}/>
+                            <RoundedNavLinks link='/profile-request' symbol={''} text={'Request'} history={history}/>
+                        </div>
+                        <div className="m-2">
+                            <RoundedNavLinks link='/community' text='Community' history={history}/>
                         </div>
                         {isAuthenticated() && 
                             <div className='m-2' onClick={()=>(signOut(()=>(console.log('clicked'))))} >

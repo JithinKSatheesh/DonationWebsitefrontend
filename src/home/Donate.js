@@ -21,12 +21,23 @@ export default function Donate() {
             <div className="col-12 col-md-4">
                 <Zoom>
                 <DonateCard>
-                    <Link style={{textDecoration:'none'}} to='profile'>
+                    <Link style={{textDecoration:'none'}} to='profile-donate'>
                         <RoundButton text='Donate Items' radius={'30px'} Bgcolor={'#012f84'} Hovercolor={'#ec4392'} />
                     </Link>
                     <div className="space-20"></div>
-                    <Link style={{textDecoration:'none'}} to='profile'>
+                    <Link style={{textDecoration:'none'}} to='profile-donate'>
                         <RoundButton text='Donate Money' radius={'30px'}  Bgcolor={'#012f84'} Hovercolor={'#ec4392'}  />
+                    </Link>
+                    <div className="space-20"></div>
+                    <div className="space-5 bg-light"></div>
+                    <div className="space-20"></div>
+                    <div className="small text-secondary  text-center">
+                        Dont know what to donate <br/>
+                        View what people are requesting.
+                    </div>
+                    <div className="space-20"></div>
+                    <Link style={{textDecoration:'none'}} to='donation-request'>
+                        <RoundButton text='View Donation Requests' radius={'30px'}  Bgcolor={'#f7b745'} Hovercolor={'#ec4392'}  />
                     </Link>
                 </DonateCard>
                 </Zoom>

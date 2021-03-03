@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import Layout from '../core/Layout'
-import { RoundButton,DonateCard,BigHeading,PreviewImage } from '../core/Utils';
+import { RoundButton,DonateCard,BigHeading } from '../core/Utils';
 import {isAuthenticated} from '../Auth/Auth'
 
 import Fade from 'react-reveal/Fade'
@@ -8,31 +8,30 @@ import Fade from 'react-reveal/Fade'
 
 export default function Profile() {
     
-    const paymentHistoyList = [
-        'You donate ₹1000 on 20/2/2021',
-        'You donate ₹2000 on 20/3/2021',
-        'You donate ₹100 on 20/4/2021',
-    ]
-
-    const PromisedItemsList = [
+    const RequestedList = [
         {
-        id:1,
-        name:'Books',
-        status:'Awaiting to get delivered',
-        needTransportHelp : true,
-        transportVolunteer:{
-            name:'Amal',
-            phone:'8980989878'
-            },   
+            id:1,
+            name:'Cloths',
+            status:'We will let you know when someone is willing to donate',
+            needTransportHelp : false,
+            transportVolunteer:{},   
         },
         {
-        id:2,
-        name:'Cloths',
-        status:'Under review',
-        needTransportHelp : true,
-        transportVolunteer:{
-            
-            },   
+            id:2,
+            name:'Books',
+            status:'Awaiting to get Picked up',
+            needTransportHelp : true,
+            transportVolunteer:{
+                name:'Arun',
+                phone:'8980989878'
+                },   
+        },
+        {
+            id:3,
+            name:'Cloths',
+            status:'Under review',
+            needTransportHelp : true,
+            transportVolunteer:{},   
         },
     ]
 
@@ -50,30 +49,19 @@ export default function Profile() {
                     <BigHeading text={`Hi, User`} size={'2em'} color='#012f84'/>
                     <div className="space-5 bg-now"></div>
                     <div className="space-50"></div>
-                    <BigHeading text={'Donate money'} size={'1.5em'} color='#012f84' />
-                    <div className="space-20"></div>
-                </div>
-                <div className="col-12 col-md-4 p-2">
-                    <PaymentCard/>
-                </div>
-                <div className="col-12 offset-md-1 col-md-7 p-2">
-                    <PaymentHistoryCard paymentList={paymentHistoyList} />
                 </div>
                 <div className="col-12">
-                    <div className="space-50"></div>
-                    <div className="space-5 bg-light"></div>
-                    <div className="space-50"></div>
-                    <BigHeading text={'Donate an item '} size={'1.5em'} color='#012f84' />
+                    <BigHeading text={'Request an item '} size={'1.5em'} color='#012f84' />
                     <div className="space-20"></div>
                 </div>
                 <div className="col-12 col-md-4">
-                    <DonateItemForm/>
+                    <RequestItemForm/>
                 </div>
                 <div className="col-12 col-md-7 offset-md-1">
-                    <PromisedItems promisedItemsList={PromisedItemsList}/>
+                    <RequestedItems RequestedList={RequestedList}/>
                     <div className="space-20"></div>
                     <div style={{cursor:'pointer'}} className="text-now font-weight-bold p-2">
-                        view donated item history
+                        view requested items history
                         <span className=" btn-link "> 
                             &nbsp;<svg  fill='#012f84' width="14" height="14" viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg>
                         </span>
@@ -87,57 +75,10 @@ export default function Profile() {
 }
 
 
-const PaymentCard = () => {
-    return (
-        <DonateCard>
-            <div className="text-now font-weight-bold">
-                Amount
-            </div>
-            <div className="space-20"></div>
-            <div className="form-group">
-                <input 
-                    style={{ borderRadius: '20px' }} 
-                    type="text" className="form-control" 
-                    placeholder="₹ "
-                    />
-            </div>
-            <RoundButton text={'Donate Money'} Bgcolor='#012f84' Hovercolor='#ec4392' />
-        </DonateCard>
-    )
-}
 
 
-const PaymentHistoryCard = ({paymentList}) => {
 
-    const Style = {
-        outerBody:{
-            boxShadow:'0px 0px 10px 5px rgba(84, 84, 84, 0.1)',
-            borderRadius:'10px'
-        }
-    }
-
-    return (
-        <>
-            <div style={{cursor:'pointer'}} className="text-now font-weight-bold p-2">
-                View Payment History
-                <span className=" btn-link "> 
-                    &nbsp;<svg  fill='#012f84' width="14" height="14" viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg>
-                </span>
-            </div>
-            <div className="p-2">
-                {paymentList&&paymentList.map((list,index)=>{
-                    return(
-                        <div key={index} style={Style.outerBody} className=" p-2 m-1">
-                                {list}
-                            </div>)
-                    })}
-            </div>
-        </>
-    )
-}
-
-
-const DonateItemForm = () => {
+const RequestItemForm = () => {
     const FormStyle = {
         InputBox:{
             borderRadius:'20px'
@@ -151,20 +92,10 @@ const DonateItemForm = () => {
         location:'',
     })
 
-    const [fileURL,setFileURL] = useState(null)
-    const [needHelp,setNeedHelp] = useState(false)
-
     const handleChange = name => event =>{
         setValues({...values,[name]:event.target.value})
     }
 
-    const filePick = (event) =>{
-        setFileURL(URL.createObjectURL(event.target.files[0]))
-    } 
-
-    const switchChange = event=>{
-        setNeedHelp(event.target.checked)
-    }
 
     return (
         <DonateCard>
@@ -208,47 +139,23 @@ const DonateItemForm = () => {
                     type="text"
                     className="form-control" />
             </div>
-            <div className="p-1">
-                <PreviewImage maxWidth='150px' maxHeight='150px' image={fileURL}/>
-            </div>
-            <div className="space-5"></div>
-            <div className="custom-file">
-                <input onChange={filePick} type="file" className="custom-file-input" id="inputGroupFile01"/>
-                <label className="custom-file-label" htmlFor="inputGroupFile01">Upload image</label>
-            </div>
-            <div className="space-20"></div>
-            <div className="custom-control custom-switch">
-                <input type="checkbox" checked={needHelp} onChange={switchChange}
-                        className="custom-control-input" id="customSwitch1"/>
-                <label className="custom-control-label" htmlFor="customSwitch1">
-                    Need transport facility?
-                    <div className="text-info small">
-                        {
-                            needHelp?
-                            'Yes, I need help to pick up my donation'
-                            :
-                            'I will deliver it myself'
-                        }
-                    </div>
-                </label>
-            </div>
-            <div className="space-5"></div>
+            
             
             <div className="space-20"></div>
-            <RoundButton text={'Donate Item'} Bgcolor='#012f84' Hovercolor='#ec4392'/>
+            <RoundButton text={'Request Item'} Bgcolor='#f7b745' Hovercolor='#ec4392'/>
         </DonateCard>
     )
 }
 
 
-const PromisedItems = ({promisedItemsList})=>{
+const RequestedItems = ({RequestedList})=>{
 
     return(<>
         <div className="text-now font-weight-bold p-2">
-            Promised item status
+            Requested items status
         </div>
         {
-        promisedItemsList && promisedItemsList.map((data)=>(
+        RequestedList && RequestedList.map((data)=>(
             <React.Fragment key={data.id} >
                 
                 <DonateCard>
@@ -276,7 +183,7 @@ const PromisedItems = ({promisedItemsList})=>{
                        </>)
                     }
                     <div className="btn btn-danger">
-                        Cancel donation
+                        Cancel Request
                     </div>
                 </DonateCard>
             </React.Fragment>

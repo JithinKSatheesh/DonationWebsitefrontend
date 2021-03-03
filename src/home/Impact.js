@@ -20,16 +20,17 @@ export default function Impact() {
             <Fade >
             <div className="col-12 text-center">
                 <span style={ImpactStyle.HugeFont}>
-                You can help by volunteering
+                How you can help us.
                 </span>
             </div>
             <div className="col-12 col-md-4 offset-md-4">
                 <div className="space-50"></div>
-                <Link style={{textDecoration:'none'}} to='/volunteer'>
-                <RoundButton text={'Help us transport donations'}  Bgcolor='#f7b744'/>
+                <Link style={{textDecoration:'none'}} to='/help-request'>
+                    <RoundButton text={'Help us transport donations'}  Bgcolor='#f7b744'/>
                 </Link>
                 <div className="space-100"></div>
             </div>
+            
             </Fade>
         </div>
     )

@@ -26,7 +26,7 @@ export default function Home() {
             <div className="space-50"></div>
             <Donate/>
             <div className="space-100"></div>
-            <div className="space-100"></div>
+            {/* <div className="space-50"></div> */}
             <Impact/>
             
         </Layout>
